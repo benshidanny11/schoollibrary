@@ -1,10 +1,12 @@
 require './decorate'
-
+require './rental'
+require './book'
 class Person < Nameable
-  attr_accessor :name, :age, :rentals
   attr_reader :id
+  attr_accessor :name, :age, :rentals
 
-  def initialize(age, name = 'unknown', parent_permission: true)
+  INITIAL_PERMISSION = true
+  def initialize(age, name = 'unknown', parent_permission = INITIAL_PERMISSION)
     super()
     @id = Random.rand(1..1000)
     @age = age
