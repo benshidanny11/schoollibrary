@@ -10,45 +10,6 @@ class App
     @rentals = []
   end
 
-  def run # rubocop:todo Metrics/CyclomaticComplexity
-    choose = select_options
-    choose = select_options while choose < 1 || choose > 7
-    case choose
-    when 1
-      books_list
-      puts 'first choose'
-    when 2
-      person_list
-    when 3
-      create_person
-    when 4
-      create_book
-    when 5
-      create_rental
-    when 6
-      rentals_list
-    when 7
-      puts 'Bye'
-      exit
-    end
-  end
-
-  def select_options
-    puts
-    puts 'Please choose an option by entering a number: '
-    options = [
-      '1 - List all books',
-      '2 - List all people',
-      '3 - Create a person',
-      '4 - Create a book',
-      '5 - Create a rental',
-      '6 - List all rentals for a given person id',
-      '7 - Exit'
-    ]
-    puts options
-    gets.chomp.to_i
-  end
-
   def books_list
     if @books.length.positive?
       @books.each do |book|
@@ -64,7 +25,7 @@ class App
     @persons.each do |individual|
       puts "[#{individual.class}]id: #{individual.id}, Name: #{individual.name}, Age: #{individual.age}"
     end
-    run
+    run(self)
   end
 
   def create_teacher
@@ -107,7 +68,7 @@ class App
     end
     puts 'Person created successfully'
     puts
-    run
+    run(self)
   end
 
   # '4 - Create a book',
@@ -118,7 +79,7 @@ class App
     author = gets.chomp
     @books << Book.new(title, author)
     puts('Book created successfully!')
-    run
+    run(self)
   end
 
   # '5 - Create a rental',
@@ -128,7 +89,7 @@ class App
 
     puts('Rental created')
     puts
-    run
+    run(self)
   end
 
   def create_rental
@@ -152,7 +113,7 @@ class App
       handled_rental(selected_book, selected_person, selected_date)
     else
       puts 'No books or no persons yet!'
-      run
+      run(self)
     end
   end
 
@@ -172,6 +133,6 @@ class App
       puts("Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}")
       puts
     end
-    run
+    run(self)
   end
 end
